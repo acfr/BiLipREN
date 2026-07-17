@@ -161,3 +161,7 @@ pip install -r requirements.txt
 | `io_fact/` | Example: nonlinear I/O factorization. |
 | `robust_inv/` | Example: robust inversion |
 
+## Contacts
+
+Yurui Zhang (*yurui.zhang@sydney.edu.au*); 
+Ruigang Wang (*ruigang.wang@sydney.edu.au*)
