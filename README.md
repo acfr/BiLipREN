@@ -43,7 +43,7 @@ $$
 **TD;LR:** *Learn an optimization-friendly surrogate loss for black-box trajectory optimization*
 
 **Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t, c_f$ are unknown, and only a dataset $\mathcal{D}=\{(u_{[0:T]}^i, J^i):1\leq i\leq n\}$ is available:
-$$
+```math
 \begin{aligned}
 \min_{u_{u_{[0:T]}}\quad
 &
@@ -57,7 +57,7 @@ x_{t+1}=f(x_t,u_t),
 \qquad
 x_0=a.
 \end{aligned}
-$$
+```
 **Can we find a new input sequence $u_{[0:T]}$ is likely to achieve a lower cost than any sample in the dataset?**
 
 - **Surrogate optimization framework:**
