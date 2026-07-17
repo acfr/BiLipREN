@@ -23,8 +23,8 @@ The following properties are guaranteed *by construction* (plug-and-play with Au
 
 $$
 \begin{split}
-\|e_u\|_T \leq \lambda_{xu} |a-b| + \lambda_{yu}\|\Delta y\|_T \\
-\|e_y\|_T \leq \lambda_{xy} |a-b| + \lambda_{uy}\|\Delta u\|_T
+\left\lVert e_u \right\rVert_T \leq \lambda_{xu} |a-b| + \lambda_{yu}\left\lVert \Delta y\right\rVert_T  \\
+\left\lVert e_y \right\rVert_T  \leq \lambda_{xy} |a-b| + \lambda_{uy}\left\lVert \Delta u\right\rVert_T 
 \end{split}
 $$
 
