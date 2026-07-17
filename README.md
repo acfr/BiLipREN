@@ -64,7 +64,13 @@ $$
 
 1. Fit a differentiable surrogate loss to the dataset:
 $$
-\hat{J}=\frac{1}{2}\|\mathcal{G}(u_{[0:T]})\|^2+c
+\widehat{J}\left(u_{[0:T]}\right)
+   =
+   \frac{1}{2}
+   \left\lVert
+   \mathcal{G}\left(u_{[0:T]}\right)
+   \right\rVert^2
+   +c,
 $$
 where $\mathcal{G}$ is a neural dynamical model that captures temporal structure and $c\in\mathbb{R}$ is a learnable parameter. 
 
