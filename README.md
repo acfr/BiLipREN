@@ -56,14 +56,15 @@ $$
 1. Fit a differentiable surrogate loss to the dataset:
    
 $$
-\hat{J}=\frac{1}{2}\lVert \mathcal{G}(u_{0:T}) \right\rVert^2+c
+\hat{J}=\frac{1}{2}\left\lVert \mathcal{G}(u_{0:T}) \right\rVert^2+c
 $$
 
 where $\mathcal{G}$ is a neural dynamical model that captures temporal structure and $c\in\mathbb{R}$ is a learnable parameter. 
 
-3. Optimize the surrogate loss: 
+3. Optimize the surrogate loss:
+   
 $$
-\hat{u}_{[0:T]}^\star:=\operatorname{argmin}_{u_{[0:T]}\in \ell^m}\; \hat{J} \left(u_{[0:T]}\right)
+\hat{u}_{0:T}^\star:=\operatorname{argmin}_{u_{0:T}\in \ell^m}\; \hat{J} \left(u_{0:T}\right)
 $$
 
 
