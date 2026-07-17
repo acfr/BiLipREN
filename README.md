@@ -64,7 +64,7 @@ where $\mathcal{G}$ is a neural dynamical model that captures temporal structure
 3. Optimize the surrogate loss:
    
 $$
-\hat{u}_{0:T}^\star:=\operatorname{argmin}_{u_{0:T}\in \ell^m}\; \hat{J} \left(u_{0:T}\right)
+\hat{u}_{0:T}^\star:=\arg\min_{u_{0:T}\in \ell^m}\; \hat{J} \left(u_{0:T}\right)
 $$
 
 
