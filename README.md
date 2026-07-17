@@ -38,14 +38,14 @@ $$
 
 **Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t, c_f$ are unknown, and only a dataset $\mathcal{D}=\{(u_{[0:T]}^i, J^i):1\leq i\leq n\}$ is available:
 $$
-\begin{split}
-\min_{u_{[0:T]}\in\ell^m}\quad
-&J\left(u_{[0:T]}\right)
+\begin{aligned}
+\min_{u_{0:T}\in\ell^m}\quad
+&J\left(u_{0:T}\right)
 :=
 c_f(x_{T+1})+\sum_{t=0}^{T}c_t(x_t,u_t)\\
 \mathrm{s.t.}\quad
 &x_{t+1}=f(x_t,u_t), \quad x_0=a
-\end{split}
+\end{aligned}
 $$
 **Can we find a new input sequence $u_{[0:T]}$ is likely to achieve a lower cost than any sample in the dataset?**
 
