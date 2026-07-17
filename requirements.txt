@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# BiLipREN-TAC — Python dependencies
+# ---------------------------------------------------------------------------
+# Tested with Python 3.12. Version specifiers below use the versions this
+# project was verified against; relax/pin further as needed.
+#
+# Install:
+#     pip install -r requirements.txt
+#
+# Note: `robustnn` (ACFR RobustNeuralNetworks) is not on PyPI and must be
+# installed from GitHub — see the final line of this file.
+# ---------------------------------------------------------------------------
+
+# --- Core numerics / autodiff (used everywhere) ---
+jax==0.6.1
+jaxlib==0.6.1
+flax==0.10.6
+optax==0.2.4
+numpy==1.26.4
+scipy==1.13.1
+
+# --- Plotting ---
+matplotlib==3.9.2
+
+# --- Trajectory optimisation (IPOPT reference solver only) ---
+casadi==3.7.2
+
+# --- Contracting-REN baselines (CREN ablation / sweep) ---
+# Not available on PyPI — install directly from GitHub:
+robustnn @ git+https://github.com/acfr/RobustNeuralNetworks.git
