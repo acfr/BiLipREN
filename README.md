@@ -49,17 +49,19 @@ c_f(x_{T+1})+\sum_{t=0}^{T}c_t(x_t,u_t)\\
 \end{aligned}
 $$
 
-**Can we find a new input sequence $u_{[0:T]}$ is likely to achieve a lower cost than any sample in the dataset?**
+**Can we find a new input sequence $u_{0:T}$ is likely to achieve a lower cost than any sample in the dataset?**
 
 - **Surrogate optimization framework:**
 
 1. Fit a differentiable surrogate loss to the dataset:
+   
 $$
-\hat{J}=\frac{1}{2}\|\mathcal{G}(u_{[0:T]})\|^2+c
+\hat{J}=\frac{1}{2}\lVert \mathcal{G}(u_{0:T}) \right\rVert^2+c
 $$
+
 where $\mathcal{G}$ is a neural dynamical model that captures temporal structure and $c\in\mathbb{R}$ is a learnable parameter. 
 
-2. Optimize the surrogate loss: 
+3. Optimize the surrogate loss: 
 $$
 \hat{u}_{[0:T]}^\star:=\operatorname{argmin}_{u_{[0:T]}\in \ell^m}\; \hat{J} \left(u_{[0:T]}\right)
 $$
