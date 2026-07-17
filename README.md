@@ -79,6 +79,8 @@ $$
 
 - **Results:**
 
+<div align="center">
+   
 | Model | Fitting Loss $L$ | Best cost $J$ | Worse cost $J$ |
 | -------- | -------- | -------- | -------- |
 | Dataset | - | 1863 | 5055 |
@@ -86,6 +88,8 @@ $$
 | C-REN | 6014 | 1918 | 2996 |
 | BiLipREN | 22805 | 1672 | - |
 | IPOPT | - | 1618 | 5837 |
+
+</div>
 
 1.  The *LSTM* fits the dataset well but is less suitable for the subsequent optimization step because its loss landscape may contain spurious local minima, flat regions, poorly conditioned gradients, and strong sensitivity to initialization.
 
@@ -102,10 +106,13 @@ $$
 **TL;DR:** *Learn a signal-2-signal normalizing flow that generates trajectory distributions from Gaussian white noise*
 
 **Generative trajectory modelling.** We seek a robustly invertible dynamical model $\mathcal{G}$ that generates samples matching the data distribution:
+
 $$
-y_{[0:T]} = \mathcal{G}\big(u_{[0:T]}\big), \quad u_t \sim \mathcal{N}(0, I),
+y_{0:T} = \mathcal{G}\big(u_{0:T}\big), \quad u_t \sim \mathcal{N}(0, I),
 $$
+
 The model is trained by minimizing the negative log-likelihood (NLL) under the normalizing-flow change-of-variables formula:
+
 $$
 \mathcal{L}_{\mathrm{NLL}} = -\sum_{t=0}^{T}\left( \log p_u(u_t) + \log\left|\det\frac{\partial u_t}{\partial y_t}\right| \right).
 $$
