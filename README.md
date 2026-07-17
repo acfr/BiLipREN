@@ -8,13 +8,13 @@ BiLipREN is a neural dynamical system that defines a robustly invertible signal-
 
 ![invertible mapping](figures/invertible_mapping.png)
 
-The REN architecture $\mathcal{G}$ is a feedback interconnection between a learnable LTI system $G$ and a fixed nonlinear activation $\sigma$.
+The REN architecture $\mathcal{G}$ is a feedback interconnection between a learnable LTI system $\boldsymbol{G}$ and a fixed nonlinear activation $\sigma$.
 
 <p align="center"><img src="figures/REN.png" alt="REN architecture" width="200"></p>
 
 The following properties are guaranteed *by construction* (plug-and-play with AutoDiff and SGD): 
 
-1. The forward model $y=\mathscr{G}(u)$ is an invertible, stable and bi-Lipschitz REN.
+1. The forward model $y=\mathcal{G}(u)$ is an invertible, stable and bi-Lipschitz REN.
 
 2. Its analytical inverse $u=\mathcal{G}^{-1}(y)$ is  a causal, stable and bi-Lipschitz REN.
 
@@ -22,16 +22,10 @@ The following properties are guaranteed *by construction* (plug-and-play with Au
 3. Both models enable robust signal reconstruction under disturbances and initial-state mismatch:
 
 $$
-\begin{aligned}
-\lVert e_u\rVert_T
-\leq
-\lambda_{xu}\lvert a-b\rvert
-+\lambda_{yu}\lVert\Delta y\rVert_T,\\
-\lVert e_y\rVert_T
-\leq
-\lambda_{xy}\lvert a-b\rvert
-+\lambda_{uy}\lVert\Delta u\rVert_T.
-\end{aligned}
+\begin{split}
+\|e_u\|_T \leq \lambda_{xu} |a-b| + \lambda_{yu}\|\Delta y\|_T \\
+\|e_y\|_T \leq \lambda_{xy} |a-b| + \lambda_{uy}\|\Delta u\|_T
+\end{split}
 $$
 
 <p align="center"><img src="figures/robust-inverse.png" alt="Robust inverse" width="320"></p>
@@ -43,41 +37,29 @@ $$
 **TD;LR:** *Learn an optimization-friendly surrogate loss for black-box trajectory optimization*
 
 **Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t, c_f$ are unknown, and only a dataset $\mathcal{D}=\{(u_{[0:T]}^i, J^i):1\leq i\leq n\}$ is available:
-```math
-\begin{aligned}
-\min_{u_{u_{[0:T]}}\quad
-&
-J\left(u_{[0:T]}\right)
+$$
+\begin{split}
+\min_{u_{[0:T]}\in\ell^m}\quad
+&J\left(u_{[0:T]}\right)
 :=
-c_f(x_{T+1})
-+\sum_{t=0}^{T}c_t(x_t,u_t)\\
-\text{s.t.}\quad
-&
-x_{t+1}=f(x_t,u_t),
-\qquad
-x_0=a.
-\end{aligned}
-```
+c_f(x_{T+1})+\sum_{t=0}^{T}c_t(x_t,u_t)\\
+\mathrm{s.t.}\quad
+&x_{t+1}=f(x_t,u_t), \quad x_0=a
+\end{split}
+$$
 **Can we find a new input sequence $u_{[0:T]}$ is likely to achieve a lower cost than any sample in the dataset?**
 
 - **Surrogate optimization framework:**
 
 1. Fit a differentiable surrogate loss to the dataset:
-   
 $$
-\widehat{J}\left(u_{[0:T]}\right)
-   =
-   \frac{1}{2}
-   \left\lVert
-   \mathcal{G}\left(u_{[0:T]}\right)
-   \right\rVert^2
-   +c,
+\hat{J}=\frac{1}{2}\|\mathcal{G}(u_{[0:T]})\|^2+c
 $$
 where $\mathcal{G}$ is a neural dynamical model that captures temporal structure and $c\in\mathbb{R}$ is a learnable parameter. 
 
-3. Optimize the surrogate loss: 
+2. Optimize the surrogate loss: 
 $$
-\hat{u}_{[0:T]}^\star:=\argmin_{u_{[0:T]}\in \ell^m}\; \hat{J} \left(u_{[0:T]}\right)
+\hat{u}_{[0:T]}^\star:=\operatorname{argmin}_{u_{[0:T]}\in \ell^m}\; \hat{J} \left(u_{[0:T]}\right)
 $$
 
 
@@ -178,7 +160,3 @@ pip install -r requirements.txt
 | `imc/` | Application 3 — inversion-based control design. |
 | `io_fact/` | Example: nonlinear I/O factorization. |
 | `robust_inv/` | Example: robust inversion |
-
-## Contacts
-
-Yurui Zhang (*yurui.zhang@sydney.edu.au*); Ruigang wang (*ruigang.wang@sydney.edu.au*)
