@@ -14,7 +14,7 @@ The REN architecture $\mathcal{G}$ is a feedback interconnection between a learn
 
 The following properties are guaranteed *by construction* (plug-and-play with AutoDiff and SGD): 
 
-1. The forward model $y=\mathcal{G}(u)$ is an invertible, stable and bi-Lipschitz REN.
+1. The forward model $`y=\mathscr{G}(u)`$ is an invertible, stable and bi-Lipschitz REN.
 
 2. Its analytical inverse $u=\mathcal{G}^{-1}(y)$ is  a causal, stable and bi-Lipschitz REN.
 
@@ -23,8 +23,14 @@ The following properties are guaranteed *by construction* (plug-and-play with Au
 
 $$
 \begin{split}
-\|e_u\|_T \leq \lambda_{xu} |a-b| + \lambda_{yu}\|\Delta y\|_T \\
-\|e_y\|_T \leq \lambda_{xy} |a-b| + \lambda_{uy}\|\Delta u\|_T
+\lVert e_u\rVert_T
+&\leq
+\lambda_{xu}\lvert a-b\rvert
++\lambda_{yu}\lVert\Delta y\rVert_T,\\
+\lVert e_y\rVert_T
+&\leq
+\lambda_{xy}\lvert a-b\rvert
++\lambda_{uy}\lVert\Delta u\rVert_T.
 \end{split}
 $$
 
