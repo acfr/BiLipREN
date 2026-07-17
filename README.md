@@ -114,7 +114,7 @@ $$
 The model is trained by minimizing the negative log-likelihood (NLL) under the normalizing-flow change-of-variables formula:
 
 $$
-\mathcal{L}_{\mathrm{NLL}} = -\sum_{t=0}^{T}\left( \log p_u(u_t) + \log\left|\det\frac{\partial u_t}{\partial y_t}\right| \right).
+\mathcal{L}_{\mathrm{NLL}} = -\sum_{t=0}^{T}\log p_u(u_t) + \log\left|\det \partial u_t/\partial y_t \right| .
 $$
 
 - **Results:**
