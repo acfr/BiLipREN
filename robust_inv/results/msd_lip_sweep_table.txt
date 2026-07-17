@@ -1,0 +1,14 @@
+Table I — MSD adversarial robustness (first-order attack, NSE only)
+  forward eps=0.1*||u||   inverse eps=0.03*||y||   washout=50   mean over 5 val trajectories
+
+Arch         mu   nu |  Fwd Clean   Fwd Adv |  Inv Clean   Inv Adv
+------------------------------------------------------------------
+C-REN       -     -  |      0.069     0.233 |        -         -  
+BiLipREN    0.1    4 |      0.261     0.344 |      0.465     0.558
+BiLipREN    0.1    8 |      0.182     0.293 |      0.459     0.590
+BiLipREN    0.1   16 |      0.153     0.272 |      0.466     0.613
+BiLipREN    0.1   32 |      0.137     0.264 |      0.456     0.613
+BiLipREN   0.01    8 |      0.139     0.258 |      0.438     1.104
+BiLipREN   0.05    8 |      0.158     0.278 |      0.459     0.658
+BiLipREN    0.1    8 |      0.182     0.293 |      0.459     0.590
+BiLipREN    0.5    8 |      0.281     0.374 |      0.474     0.521
