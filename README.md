@@ -8,25 +8,25 @@ BiLipREN is a neural dynamical system that defines a robustly invertible signal-
 
 ![invertible mapping](figures/invertible_mapping.png)
 
-The REN architecture $\mathcal{G}$ is a feedback interconnection between a learnable LTI system $\boldsymbol{G}$ and a fixed nonlinear activation $\sigma$.
+The REN architecture <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/G_dark.png"><img alt="G" src="figures/eq/inline/G.png" height="18"></picture> is a feedback interconnection between a learnable LTI system <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/bold_G_dark.png"><img alt="bold G" src="figures/eq/inline/bold_G.png" height="18"></picture> and a fixed nonlinear activation <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/sigma_dark.png"><img alt="sigma" src="figures/eq/inline/sigma.png" height="18"></picture>.
 
 <p align="center"><img src="figures/REN.png" alt="REN architecture" width="200"></p>
 
 The following properties are guaranteed *by construction* (plug-and-play with AutoDiff and SGD): 
 
-1. The forward model $y=\mathcal{G}(u)$ is an invertible, stable and bi-Lipschitz REN.
+1. The forward model <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/forward_dark.png"><img alt="y = G(u)" src="figures/eq/inline/forward.png" height="18"></picture> is an invertible, stable and bi-Lipschitz REN.
 
-2. Its analytical inverse $u=\mathcal{G}^{-1}(y)$ is  a causal, stable and bi-Lipschitz REN.
+2. Its analytical inverse <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/inverse_dark.png"><img alt="u = inverse G(y)" src="figures/eq/inline/inverse.png" height="18"></picture> is a causal, stable and bi-Lipschitz REN.
 
 
 3. Both models enable robust signal reconstruction under disturbances and initial-state mismatch:
 
-$$
-\begin{split}
-\left\lVert e_u \right\rVert_T \leq \lambda_{xu} |a-b| + \lambda_{yu}\left\lVert \Delta y\right\rVert_T  \\
-\left\lVert e_y \right\rVert_T  \leq \lambda_{xy} |a-b| + \lambda_{uy}\left\lVert \Delta u\right\rVert_T 
-\end{split}
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_reconstruction_dark.png">
+    <img alt="robust reconstruction bounds" src="figures/eq/eq_reconstruction.png" width="250">
+  </picture>
+</p>
 
 <p align="center"><img src="figures/robust-inverse.png" alt="Robust inverse" width="320"></p>
 
@@ -36,52 +36,57 @@ $$
 
 **TD;LR:** *Learn an optimization-friendly surrogate loss for black-box trajectory optimization*
 
-**Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t$ and $c_f$ are unknown, and only a dataset $(u_{0:T}^i, J^i)$ with $1\leq i\leq n$ is available:
+**Black-box Trajectory Optimization.** Suppose that <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/unknowns_dark.png"><img alt="f, a, c_t, c_f" src="figures/eq/inline/unknowns.png" height="18"></picture> are unknown, and only a dataset <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/dataset_dark.png"><img alt="sampled input-loss pairs" src="figures/eq/inline/dataset.png" height="20"></picture> is available:
 
-$$
-\begin{aligned}
-\min_{u_{0:T}\in\ell^m}\quad
-&J\left(u_{0:T}\right)
-:=
-c_f(x_{T+1})+\sum_{t=0}^{T}c_t(x_t,u_t)\\
-\mathrm{s.t.}\quad
-&x_{t+1}=f(x_t,u_t), \quad x_0=a
-\end{aligned}
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_problem_dark.png">
+    <img alt="black-box trajectory optimization problem" src="figures/eq/eq_problem.png" width="350">
+  </picture>
+</p>
 
-**Can we find a new input sequence $u_{0:T}$ is likely to achieve a lower cost than any sample in the dataset?**
+**Can we find a new input sequence <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/u_T_dark.png"><img alt="u_[T]" src="figures/eq/inline/u_T.png" height="18"></picture> that is likely to achieve a lower cost than any sample in the dataset?**
 
 - **Surrogate optimization framework:**
 
 1. Fit a differentiable surrogate loss to the dataset:
    
-$$
-\hat{J}=\frac{1}{2}\left\lVert \mathcal{G}(u_{0:T}) \right\rVert^2+c
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_surrogate_dark.png">
+    <img alt="surrogate loss" src="figures/eq/eq_surrogate.png" width="200">
+  </picture>
+</p>
 
-where $\mathcal{G}$ is a neural dynamical model that captures temporal structure and $c\in\mathbb{R}$ is a learnable parameter. 
+where <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/G_dark.png"><img alt="G" src="figures/eq/inline/G.png" height="18"></picture> is a neural dynamical model that captures temporal structure and <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/c_real_dark.png"><img alt="c in R" src="figures/eq/inline/c_real.png" height="18"></picture> is a learnable parameter. 
 
-3. Optimize the surrogate loss:
+2. Optimize the surrogate loss:
    
-$$
-\hat{u}_{0:T}^\star:=\arg\min_{u_{0:T}\in \ell^m}\\; \hat{J} \left(u_{0:T}\right)
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_argmin_dark.png">
+    <img alt="surrogate loss minimization" src="figures/eq/eq_argmin.png" width="200">
+  </picture>
+</p>
 
 
-- **Our approach**: parameterize $\mathcal{G}$ as a BiLipREN, giving the surrogate $\hat{J}$ two nice properties:
+- **Our approach**: parameterize <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/G_dark.png"><img alt="G" src="figures/eq/inline/G.png" height="18"></picture> as a BiLipREN, giving the surrogate <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/J_hat_dark.png"><img alt="J hat" src="figures/eq/inline/J_hat.png" height="18"></picture> two nice properties:
 
 1. It satisfies the Polyak–Łojasiewicz (PL) condition. Consequently, despite being nonconvex, it has no spurious local minima, and gradient-based methods converge linearly under standard step-size conditions.
 2. The minimizer can be computed efficiently through dynamic inversion:
    
-$$
-\hat{u}_{0:T}^\star=\mathcal{G}^{-1}(0).
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_inversion_dark.png">
+    <img alt="dynamic inversion" src="figures/eq/eq_inversion.png" width="120">
+  </picture>
+</p>
 
 - **Results:**
 
 <div align="center">
    
-| Model | Fitting Loss $L$ | Best cost $J$ | Worse cost $J$ |
+| Model | Fitting loss $L$ | Best cost $J$ | Worst cost $J$ |
 | -------- | -------- | -------- | -------- |
 | Dataset | - | 1863 | 5055 |
 | LSTM | 1718 | 1868 | 4758 |
@@ -105,17 +110,23 @@ $$
 
 **TL;DR:** *Learn a signal-2-signal normalizing flow that generates trajectory distributions from Gaussian white noise*
 
-**Generative trajectory modelling.** We seek a robustly invertible dynamical model $\mathcal{G}$ that generates samples matching the data distribution:
+**Generative trajectory modelling.** We seek a robustly invertible dynamical model <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/G_dark.png"><img alt="G" src="figures/eq/inline/G.png" height="18"></picture> that generates samples matching the data distribution:
 
-$$
-y_{0:T} = \mathcal{G}\big(u_{0:T}\big), \quad u_t \sim \mathcal{N}(0, I),
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_generation_dark.png">
+    <img alt="generative model" src="figures/eq/eq_generation.png" width="200">
+  </picture>
+</p>
 
 The model is trained by minimizing the negative log-likelihood (NLL) under the normalizing-flow change-of-variables formula:
 
-$$
-\mathcal{L}_{\mathrm{NLL}} = -\sum_{t=0}^{T}\log\\, p_u(u_t) + \log\left|\det \partial u_t/\partial y_t \right| .
-$$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_nll_dark.png">
+    <img alt="negative log-likelihood loss" src="figures/eq/eq_nll.png" width="280">
+  </picture>
+</p>
 
 - **Results:**
 
@@ -123,7 +134,7 @@ $$
 
 <p align="center"><img src="figures/mbd_generation.png" alt="Dataset vs. generated trajectories" width="500"></p>
 
-2. Mapping the data through $\mathcal{G}^{-1}$ produces approximately white Gaussian latent variables: their autocorrelations remain within the 95% confidence band, and their Q–Q plot closely follows that of a standard Gaussian distribution.
+2. Mapping the data through <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/G_inverse_dark.png"><img alt="inverse G" src="figures/eq/inline/G_inverse.png" height="18"></picture> produces approximately white Gaussian latent variables: their autocorrelations remain within the 95% confidence band, and their Q–Q plot closely follows that of a standard Gaussian distribution.
 
 <p align="center"><img src="figures/mbd_acf_qq.png" alt="Latent ACF and Q-Q plots" width="400"></p>
 
@@ -135,21 +146,27 @@ $$
 
 <p align="center"><img src="figures/imc_blk_diag.png" alt="Internal model control block diagram" width="400"></p>
 
-  1. Learn an inner–outer factorization from input–output data generated by the true system $\mathcal{P}$:
+  1. Learn an inner–outer factorization from input–output data generated by the true system <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/P_dark.png"><img alt="P" src="figures/eq/inline/P.png" height="18"></picture>:
      
-  $$
-  \hat{\mathcal{P}} = \boldsymbol{O}(z)\circ\mathcal{G}
-  $$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_iofact_dark.png">
+    <img alt="inner-outer factorization" src="figures/eq/eq_iofact.png" width="100">
+  </picture>
+</p>
   
-  where the inner factor $\boldsymbol{O}(z)$ is an all-pass filter (stable but non-minimum-phase system) and the outer factor $\mathcal{G}$ is a BiLipREN (stable minimum-phase system). 
+  where the inner factor <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/O_z_dark.png"><img alt="O(z)" src="figures/eq/inline/O_z.png" height="18"></picture> is an all-pass filter (stable but non-minimum-phase system) and the outer factor <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/G_dark.png"><img alt="G" src="figures/eq/inline/G.png" height="18"></picture> is a BiLipREN (stable minimum-phase system). 
   
-  3. Construct the IMC controller in the Youla form with $Q$-parameter of
+  2. Construct the IMC controller in the Youla form with <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/Q_dark.png"><img alt="Q" src="figures/eq/inline/Q.png" height="18"></picture>-parameter
      
-  $$
-  \mathcal{Q} = \mathcal{R}\circ\hat{\mathcal{P}}^{\sharp}
-  $$
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/eq/eq_Q_dark.png">
+    <img alt="IMC controller" src="figures/eq/eq_Q.png" width="100">
+  </picture>
+</p>
   
-  where $\mathcal{R}$ is a low-pass filter and $\hat{\mathcal{P}}^{\sharp} = \mathcal{G}^{-1}\circ\boldsymbol{O}^{\top}(1)$ is an approximate inverse of $\hat{\mathcal{P}}$. When the input is piece-wise constant signals, we have that $e_u=\hat{\mathcal{P}}\circ\hat{\mathcal{P}}^{\sharp}(u)-u$  converges exponentially to zero.
+  where <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/R_dark.png"><img alt="R" src="figures/eq/inline/R.png" height="18"></picture> is a low-pass filter and <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/P_sharp_dark.png"><img alt="approximate inverse P sharp" src="figures/eq/inline/P_sharp.png" height="20"></picture> is an approximate inverse of <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/P_hat_dark.png"><img alt="P hat" src="figures/eq/inline/P_hat.png" height="18"></picture>. For piecewise-constant inputs, <picture><source media="(prefers-color-scheme: dark)" srcset="figures/eq/inline/e_u_dark.png"><img alt="input reconstruction error" src="figures/eq/inline/e_u.png" height="20"></picture> converges exponentially to zero.
 
 
 - **Results.** The controller achieves reference tracking for a four-tank system with delayed input flow. 
