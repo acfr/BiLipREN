@@ -36,7 +36,7 @@ $$
 
 **TD;LR:** *Learn an optimization-friendly surrogate loss for black-box trajectory optimization*
 
-**Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t, c_f$ are unknown, and only a dataset $(u_{0:T}^i, J^i)$ with $1\leq i\leq n$ is available:
+**Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t$ and $c_f$ are unknown, and only a dataset $(u_{0:T}^i, J^i)$ with $1\leq i\leq n$ is available:
 
 $$
 \begin{aligned}
