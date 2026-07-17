@@ -71,9 +71,10 @@ $$
 - **Our approach**: parameterize $\mathcal{G}$ as a BiLipREN, giving the surrogate $\hat{J}$ two nice properties:
 
 1. It satisfies the Polyak–Łojasiewicz (PL) condition. Consequently, despite being nonconvex, it has no spurious local minima, and gradient-based methods converge linearly under standard step-size conditions.
-2. The minimizer can be computed efficiently through dynamic inversion: 
+2. The minimizer can be computed efficiently through dynamic inversion:
+   
 $$
-\hat{u}_{[0:T]}^\star=\mathcal{G}^{-1}(0).
+\hat{u}_{0:T}^\star=\mathcal{G}^{-1}(0).
 $$
 
 - **Results:**
