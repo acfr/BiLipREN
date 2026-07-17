@@ -45,13 +45,13 @@ $$
 **Black-box Trajectory Optimization.** Suppose that $f,a, x_t, c_t, c_f$ are unknown, and only a dataset $\mathcal{D}=\{(u_{[0:T]}^i, J^i):1\leq i\leq n\}$ is available:
 $$
 \begin{aligned}
-\min_{u_{[0:T]}\in\ell^m}\quad
+\min_{u_{u_{[0:T]}}\quad
 &
 J\left(u_{[0:T]}\right)
 :=
 c_f(x_{T+1})
 +\sum_{t=0}^{T}c_t(x_t,u_t)\\
-\text{subject to}\quad
+\text{s.t.}\quad
 &
 x_{t+1}=f(x_t,u_t),
 \qquad
