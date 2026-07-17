@@ -14,7 +14,7 @@ The REN architecture $\mathcal{G}$ is a feedback interconnection between a learn
 
 The following properties are guaranteed *by construction* (plug-and-play with AutoDiff and SGD): 
 
-1. The forward model $`y=\mathscr{G}(u)`$ is an invertible, stable and bi-Lipschitz REN.
+1. The forward model $y=\mathscr{G}(u)$ is an invertible, stable and bi-Lipschitz REN.
 
 2. Its analytical inverse $u=\mathcal{G}^{-1}(y)$ is  a causal, stable and bi-Lipschitz REN.
 
@@ -22,16 +22,16 @@ The following properties are guaranteed *by construction* (plug-and-play with Au
 3. Both models enable robust signal reconstruction under disturbances and initial-state mismatch:
 
 $$
-\begin{split}
+\begin{aligned}
 \lVert e_u\rVert_T
-&\leq
+\leq
 \lambda_{xu}\lvert a-b\rvert
 +\lambda_{yu}\lVert\Delta y\rVert_T,\\
 \lVert e_y\rVert_T
-&\leq
+\leq
 \lambda_{xy}\lvert a-b\rvert
 +\lambda_{uy}\lVert\Delta u\rVert_T.
-\end{split}
+\end{aligned}
 $$
 
 <p align="center"><img src="figures/robust-inverse.png" alt="Robust inverse" width="320"></p>
