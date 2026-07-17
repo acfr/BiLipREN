@@ -63,6 +63,7 @@ $$
 - **Surrogate optimization framework:**
 
 1. Fit a differentiable surrogate loss to the dataset:
+   
 $$
 \widehat{J}\left(u_{[0:T]}\right)
    =
@@ -74,7 +75,7 @@ $$
 $$
 where $\mathcal{G}$ is a neural dynamical model that captures temporal structure and $c\in\mathbb{R}$ is a learnable parameter. 
 
-2. Optimize the surrogate loss: 
+3. Optimize the surrogate loss: 
 $$
 \hat{u}_{[0:T]}^\star:=\argmin_{u_{[0:T]}\in \ell^m}\; \hat{J} \left(u_{[0:T]}\right)
 $$
